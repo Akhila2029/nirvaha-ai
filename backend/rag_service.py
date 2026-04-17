@@ -3,7 +3,7 @@ import openai
 from groq import Groq
 from dotenv import load_dotenv
 import logging
-#from vector_store import vector_store
+from vector_store import vector_store
 
 load_dotenv()
 
@@ -121,11 +121,7 @@ Generate a calm, concise reflection response. Use 2-4 sentences only. Follow the
         # 1. RETRIEVAL: Fetch relevant chunks from vector store
         try:
             logger.info("Step 1: Retrieving context chunks from vector store...")
-            chunks = [
-    "It can sometimes feel overwhelming when situations do not go as expected.",
-    "At times, a single moment can carry more weight than it appears on the surface.",
-    "In some situations, uncertainty can make experiences feel more intense."
-]
+            chunks = vector_store.search(user_input, n_results=5)
             if chunks:
                 logger.info(f"✓ Retrieved {len(chunks)} chunks:")
                 for i, chunk in enumerate(chunks, 1):
